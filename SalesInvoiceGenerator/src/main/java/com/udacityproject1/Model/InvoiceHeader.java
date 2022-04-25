@@ -4,9 +4,11 @@
  */
 package com.udacityproject1.Model;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 /**
  *
@@ -19,8 +21,7 @@ public class InvoiceHeader {
     private String customerName;
     private Date invoiceDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    Date d;
-    String invoiceDateFormatted;
+
     
     
     //Create array List from  Invoice Line class
@@ -92,8 +93,7 @@ public class InvoiceHeader {
  
     @Override
     public String toString() {
-        invoiceDateFormatted = dateFormat.format(invoiceDate);
-        return invoiceNumber +"," + customerName +"," +  invoiceDateFormatted ;
+        return invoiceNumber +"," +  dateFormat.format(invoiceDate) +"," + customerName ;
     }  
 
 }

@@ -222,11 +222,11 @@ public class InvoicesListener implements ActionListener, ListSelectionListener  
                 lines = lines.substring(0, lines.length()-1);
                 result = fileChoosed.showSaveDialog(frame);
                 File lineFile = fileChoosed.getSelectedFile();
-                FileWriter lfw = new FileWriter(lineFile);
+                FileWriter lineWriter = new FileWriter(lineFile);
                 headerWriter.write(headers);
-                lfw.write(lines);
+                lineWriter.write(lines);
                 headerWriter.close();
-                lfw.close();
+                lineWriter.close();
                 
                 JOptionPane.showMessageDialog(frame, "Files Saved Successfully  ", "Attension", JOptionPane.INFORMATION_MESSAGE);
             }
