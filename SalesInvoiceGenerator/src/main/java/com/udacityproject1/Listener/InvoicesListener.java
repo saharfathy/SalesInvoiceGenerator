@@ -95,18 +95,19 @@ public class InvoicesListener implements ActionListener, ListSelectionListener  
     //Method to handle Selection from invoice Table and Show the Item
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        System.out.println("Invoice Selected!" + frame.getInvoicesTable().getSelectedRow());
-        invoicesTableRowSelected();
+        int rowIndex = frame.getInvoicesTable().getSelectedRow();
+        System.out.println("Invoice Selected!" + rowIndex);
+        invoicesTableRowSelected(rowIndex);
         
     }
     
     
-     private void invoicesTableRowSelected() {    
-        int rowIndex = frame.getInvoicesTable().getSelectedRow();
-        if (rowIndex >= 0) {
+     private void invoicesTableRowSelected(int rowIndex) {    
+        if (rowIndex != -1) {
             InvoiceHeader rowSelected = frame.getInvoicesList().get(rowIndex);
             ArrayList<InvoiceLine> lines = rowSelected.getLines();
             ItemsTableModel itemsData = new ItemsTableModel(lines);
+            frame.setItemLineList(lines);
             frame.getItemsTable().setModel(itemsData);
             frame.getNameTextField().setText(rowSelected.getCustomerName());
             frame.getDateTextField().setText(dateFormat.format(rowSelected.getInvoiceDate()));
@@ -198,14 +199,15 @@ public class InvoicesListener implements ActionListener, ListSelectionListener  
     
     // <editor-fold defaultstate="collapsed" desc="Save File Menu Item">
     private void saveFileMenuItem() {
-        System.out.println("Save File"); 
+        System.out.println("Save File");
+        JOptionPane.showMessageDialog(frame, "Please, Select to Save  InvoiceHeader.Csv file! then Choose InvoiceLine.Csv ", "Attension", JOptionPane.WARNING_MESSAGE);
          ArrayList<InvoiceHeader> invoicesList = frame.getInvoicesList();
-        JFileChooser fileC = new JFileChooser();
+        JFileChooser fileChoosed = new JFileChooser();
         try {
-            int result = fileC.showSaveDialog(frame);
+            int result = fileChoosed.showSaveDialog(frame);
             if (result == JFileChooser.APPROVE_OPTION) {
-                File headerFile = fileC.getSelectedFile();
-                FileWriter headerFW = new FileWriter(headerFile);
+                File headerFile = fileChoosed.getSelectedFile();
+                FileWriter headerWriter = new FileWriter(headerFile);
                 String headers = "";
                 String lines = "";
                 for (InvoiceHeader invoice : invoicesList) {
@@ -218,13 +220,15 @@ public class InvoicesListener implements ActionListener, ListSelectionListener  
                 }
                 headers = headers.substring(0, headers.length()-1);
                 lines = lines.substring(0, lines.length()-1);
-                result = fileC.showSaveDialog(frame);
-                File lineFile = fileC.getSelectedFile();
+                result = fileChoosed.showSaveDialog(frame);
+                File lineFile = fileChoosed.getSelectedFile();
                 FileWriter lfw = new FileWriter(lineFile);
-                headerFW.write(headers);
+                headerWriter.write(headers);
                 lfw.write(lines);
-                headerFW.close();
+                headerWriter.close();
                 lfw.close();
+                
+                JOptionPane.showMessageDialog(frame, "Files Saved Successfully  ", "Attension", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(frame, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -243,24 +247,29 @@ public class InvoicesListener implements ActionListener, ListSelectionListener  
     // <editor-fold defaultstate="collapsed" desc="Create New Invoice">
     private void createNewInvoice() {
         System.out.println("Create New Invoice");
-        //get Data Written in the text Fields
-        int invoiceIndex = frame.getInvoicesTable().getSelectedRow();
-        //InvoiceHeader header = frame.getInvoiceHeaderTableModel().getInvoicesHeaderList().get(invoiceIndex);
-        frame.getInvoiceHeaderTableModel().getInvoicesHeaderList().remove(invoiceIndex);
-        String customerName = frame.getInvoiceHeaderDialog().getCustomerNameField().getText();
-        String invDatetxtField = frame.getInvoiceHeaderDialog().getInvoiceDateField().getText();
-        Date invoiceDate = new Date();
         //Close the Dialog
         frame.getInvoiceHeaderDialog().setVisible(false);
         
-        //Save the data in the table
+        
+        //get Data Written in the text Fields
+        String customerName = frame.getInvoiceHeaderDialog().getCustomerNameField().getText();
+        String invDatetxtField = frame.getInvoiceHeaderDialog().getInvoiceDateField().getText();
+        //String d = dateFormat.(invDatetxtField);
+        Date invoiceDate = new Date();
         try {
              invoiceDate = dateFormat.parse(invDatetxtField);      
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(frame, "Wrong date format", "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
-        int invoiceNum = getNextInvoiceIndex();
+        /*
+        int invoiceIndex = frame.getInvoicesTable().getSelectedRow();
+        //InvoiceHeader header = frame.getInvoiceHeaderTableModel().getInvoicesHeaderList().get(invoiceIndex);
+        frame.getInvoiceHeaderTableModel().getInvoicesHeaderList().remove(invoiceIndex);
+        */
+       //Save the data in the table
+        int invoiceNum = 0;
+        invoiceNum = getNextInvoiceIndex();
         InvoiceHeader invoiceHeader = new InvoiceHeader(invoiceNum, invoiceDate, customerName);
         frame.getInvoicesList().add(invoiceHeader);
         //Draw the Table Again After changes

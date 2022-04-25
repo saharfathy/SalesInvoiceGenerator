@@ -10,7 +10,6 @@ import com.udacityproject1.Model.InvoiceLine;
 import com.udacityproject1.Model.InvoicesTableModel;
 import com.udacityproject1.Model.ItemsTableModel;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -247,24 +246,34 @@ public class InvoiceFrame extends javax.swing.JFrame {
     private javax.swing.JTextField nameTextField;
     // End of variables declaration//GEN-END:variables
    
+    // <editor-fold defaultstate="collapsed" desc="Lister Code">
+     // Create Action Listener Object & make Action commands
+     // create Lister Object
+     private InvoicesListener listener = new InvoicesListener(this);
+  
+     public InvoicesListener getListener() {
+        return listener;
+      }// </editor-fold>
+    
     private ArrayList<InvoiceHeader> invoicesList ;
     private ArrayList<InvoiceLine> itemLineList ;
-
-    public void setItemLineList(ArrayList<InvoiceLine> itemLineList) {
-        this.itemLineList = itemLineList;
-    }
     private InvoicesTableModel invoiceHeaderTableModel;
     private ItemsTableModel invoiceLinesTableModel;
+
     
-    
-    public void setInvoicesList(ArrayList<InvoiceHeader> invoicesList) {
+    //Get and Set For the Invoice Header Array
+     public void setInvoicesList(ArrayList<InvoiceHeader> invoicesList) {
         this.invoicesList = invoicesList;
     }
 
     public ArrayList<InvoiceHeader> getInvoicesList() {
         return invoicesList;
     }
-
+    
+//Get and Set For the Invoice Line Array
+    public void setItemLineList(ArrayList<InvoiceLine> itemLineList) {
+        this.itemLineList = itemLineList;
+    }
     public ArrayList<InvoiceLine> getItemLineList() {
         return itemLineList;
     }
@@ -292,14 +301,7 @@ public class InvoiceFrame extends javax.swing.JFrame {
 
 // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="Lister Code">
-     // Create Action Listener Object & make Action commands
-     // create Lister Object
-     private InvoicesListener listener = new InvoicesListener(this);
-  
-     public InvoicesListener getListener() {
-        return listener;
-      }// </editor-fold>
+    
     
      
     // <editor-fold defaultstate="collapsed" desc="New Invoice & New Line Dialog"> 

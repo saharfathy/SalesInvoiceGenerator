@@ -6,6 +6,7 @@ package com.udacityproject1.Model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,16 +16,16 @@ import javax.swing.table.AbstractTableModel;
  */
 public class InvoicesTableModel extends AbstractTableModel {
 
-    private List<InvoiceHeader> invoiceHeaderList;
+    private ArrayList<InvoiceHeader> invoiceHeaderList;
     private int Colnumber = 4 ; 
     private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     
-    public InvoicesTableModel(List<InvoiceHeader> invoiceHeaderList) {
+    public InvoicesTableModel(ArrayList<InvoiceHeader> invoiceHeaderList) {
         
         this.invoiceHeaderList = invoiceHeaderList;
     }
 
-    public List<InvoiceHeader> getInvoicesHeaderList() {
+    public ArrayList<InvoiceHeader> getInvoicesHeaderList() {
         return invoiceHeaderList;
     }
     

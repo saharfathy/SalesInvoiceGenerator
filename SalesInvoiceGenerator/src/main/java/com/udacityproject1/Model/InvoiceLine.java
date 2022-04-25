@@ -69,7 +69,7 @@ public class InvoiceLine {
       
     @Override
     public String toString() {
-        return "InvoiceLine{" + "itemName=" + itemName + ", itemPrice=" + itemPrice + ", itemCount=" + itemCount + '}';
+        return header.getInvoiceNumber() +"," +itemName +"," + itemPrice +"," + itemCount ;
     }   
 
     

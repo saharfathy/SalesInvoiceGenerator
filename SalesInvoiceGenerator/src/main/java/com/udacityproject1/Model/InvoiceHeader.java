@@ -4,6 +4,7 @@
  */
 package com.udacityproject1.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,6 +18,10 @@ public class InvoiceHeader {
     private int invoiceNumber;
     private String customerName;
     private Date invoiceDate;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    Date d;
+    String invoiceDateFormatted;
+    
     
     //Create array List from  Invoice Line class
     private ArrayList<InvoiceLine> lines;
@@ -69,11 +74,11 @@ public class InvoiceHeader {
     
     
     
-    
+    /*
     //fill the Array List with Invoice Lines 
     public void addInvoiceLine(InvoiceLine line){
         getLines().add(line);
-    }
+    }*/
     
     //Get the whole Invoice total
     public double invoiceTotal(){        
@@ -87,6 +92,8 @@ public class InvoiceHeader {
  
     @Override
     public String toString() {
-        return "InvoiceHeader{" + "invoiceNumber=" + invoiceNumber + ", customerName=" + customerName + ", invoiceDate=" + invoiceDate + '}';
+        invoiceDateFormatted = dateFormat.format(invoiceDate);
+        return invoiceNumber +"," + customerName +"," +  invoiceDateFormatted ;
     }  
+
 }
